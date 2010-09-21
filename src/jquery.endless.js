@@ -9,12 +9,14 @@ $.fn.endless = function(method, options) {
 
   return this.each(function() {
     var win = $(window),
-        container = $(this);
-        statuses = $(options.statusesSelector, container)
+        container = $(this),
+        options = container.data('options') || {},
+        statuses = container.data(options.statuses) || null;
 
     if (method == 'stop') {
       stop();
     } else if (method == 'start') {
+      stop();
       start();
     } else {
       options = $.extend({
@@ -40,6 +42,7 @@ $.fn.endless = function(method, options) {
         statusesSelector: 'article',
 
         // Data keys
+        statuses: 'as-statuses',
         first: 'as-first',
         last: 'as-last',
         timer: 'as-timer',
@@ -50,11 +53,12 @@ $.fn.endless = function(method, options) {
         namespace: 'endless',
       }, method || {}, options || {});
 
+      statuses = $(options.statusesSelector, container).addClass(options.statusClass);
       container.addClass(options.containerClass)
           .data('options', options)
+          .data(options.statuses, statuses)
           .data(options.first, statuses.last().attr(options.dataName))
           .data(options.last, statuses.first().attr(options.dataName));
-      statuses.addClass(options.statusClass);
 
       start();
     }
