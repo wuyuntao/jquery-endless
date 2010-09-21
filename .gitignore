@@ -1,0 +1,9 @@
+*.sw[op]
+*.py[oc]
+.todo
+*.bak
+
+html5demos/.bundle
+html5demos/db/*.sqlite3
+html5demos/log/*.log
+html5demos/tmp/**/*
